@@ -17,7 +17,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Negative Content-Length',
+    'test'      :   '(3.1.2.3) Negative Content-Length (int to word)',
     'id'        :   'intwdcl'
 }
 

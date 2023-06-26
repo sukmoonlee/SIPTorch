@@ -17,7 +17,7 @@ from mutators.replparam import rmallParam, rmspcParam
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Request Method with CSeq Method Mismatch',
+    'test'      :   '(3.1.2.17) Request Method with CSeq Method Mismatch',
     'id'        :   'cseqmatch'
 }
 

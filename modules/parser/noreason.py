@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Syntactical Parser Tests',
-    'test'      :   'Content Length Larger Than Message',
+    'test'      :   '(3.1.1.13) Empty Reason Phrase',
     'id'        :   'noreason'
 }
 

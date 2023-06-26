@@ -17,7 +17,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Multiple Space Separating Request-Line Elements',
+    'test'      :   '(3.1.2.9) Multiple Space Separating Request-Line Elements',
     'id'        :   'lwsstart'
 }
 

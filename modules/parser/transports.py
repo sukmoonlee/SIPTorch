@@ -17,7 +17,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Syntactical Parser Tests',
-    'test'      :   'Varied and Unknown Transport Types',
+    'test'      :   '(3.1.1.10) Varied and Unknown Transport Types',
     'id'        :   'transports'
 }
 

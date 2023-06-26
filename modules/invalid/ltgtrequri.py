@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   '</> Enclosing Request-URI',
+    'test'      :   '(3.1.2.7) </> Enclosing Request-URI',
     'id'        :   'ltgtrequri'
 }
 

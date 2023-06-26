@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Unknown Method with CSeq Method Mismatch',
+    'test'      :   '(3.1.2.18) Unknown Method with CSeq Method Mismatch',
     'id'        :   'metmatch'
 }
 

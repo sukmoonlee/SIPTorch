@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Syntactical Parser Tests',
-    'test'      :   'Message with No LWS between Display Name and <',
+    'test'      :   '(3.1.1.6) Message with No LWS between Display Name and <',
     'id'        :   'lwsdp'
 }
 

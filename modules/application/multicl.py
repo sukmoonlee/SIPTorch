@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Application Layer Semantics',
-    'test'      :   'OPTIONS with Multiple Content-Length Values',
+    'test'      :   '(3.3.9) OPTIONS with Multiple Content-Length Values',
     'id'        :   'multicl'
 }
 

@@ -17,7 +17,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Syntactical Parser Tests',
-    'test'      :   'Use of "%" When It Is Not an Escape',
+    'test'      :   '(3.1.1.5) Use of "%" When It Is Not an Escape',
     'id'        :   'escinv'
 }
 

@@ -17,7 +17,7 @@ from mutators.replparam import genRandStr
 
 module_info = {
     'category'  :   'Application Layer Semantics',
-    'test'      :   'Unknown/Invalid Content Type',
+    'test'      :   '(3.3.6) Unknown/Invalid Content Type',
     'id'        :   'invct'
 }
 

@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Content Length Larger Than Message',
+    'test'      :   '(3.1.2.2) Content Length Larger Than Message',
     'id'        :   'clerr'
 }
 

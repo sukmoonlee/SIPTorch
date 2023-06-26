@@ -18,7 +18,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Syntactical Parser Tests',
-    'test'      :   'Long Values in Header Fields',
+    'test'      :   '(3.1.1.7) Long Values in Header Fields',
     'id'        :   'longreq'
 }
 

@@ -17,7 +17,7 @@ from mutators.replparam import genRandStr
 
 module_info = {
     'category'  :   'Application Layer Semantics',
-    'test'      :   'Unknown Request URI with Unknown Scheme in Header Fields',
+    'test'      :   '(3.3.4) Unknown Request URI with Unknown Scheme in Header Fields',
     'id'        :   'unkscm2'
 }
 

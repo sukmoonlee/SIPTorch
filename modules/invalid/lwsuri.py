@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Malformed SIP Request-URI with Embedded LWS',
+    'test'      :   '(3.1.2.8) Malformed SIP Request-URI with Embedded LWS',
     'id'        :   'lwsuri'
 }
 

@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Application Layer Semantics',
-    'test'      :   'Zero Value in Max-Forwards Header',
+    'test'      :   '(3.3.11) Zero Value in Max-Forwards Header',
     'id'        :   'mfzero'
 }
 

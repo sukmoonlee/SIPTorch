@@ -17,7 +17,7 @@ from mutators.replparam import genRandStr
 
 module_info = {
     'category'  :   'Application Layer Semantics',
-    'test'      :   'Invalid/Unacceptable Accept Offering',
+    'test'      :   '(3.3.15) Invalid/Unacceptable Accept Offering',
     'id'        :   'invsdp'
 }
 

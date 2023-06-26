@@ -17,7 +17,7 @@ from mutators.replparam import genRandStr
 
 module_info = {
     'category'  :   'Application Layer Semantics',
-    'test'      :   'Unknown/Invalid Authorization Scheme',
+    'test'      :   '(3.3.7) Unknown/Invalid Authorization Scheme',
     'id'        :   'unkauth'
 }
 

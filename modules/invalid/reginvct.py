@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Failure to Enclose name-addr URI in <>',
+    'test'      :   '(3.1.2.13) Failure to Enclose name-addr URI in <>',
     'id'        :   'reginvct'
 }
 

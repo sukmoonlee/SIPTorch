@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Extraneous Header Field Separators',
+    'test'      :   '(3.1.2.1) Extraneous Header Field Separators',
     'id'        :   'exthdsep'
 }
 

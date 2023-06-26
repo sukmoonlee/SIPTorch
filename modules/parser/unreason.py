@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Syntactical Parser Tests',
-    'test'      :   'Unusual Reason Phrase',
+    'test'      :   '(3.1.1.12) Unusual Reason Phrase',
     'id'        :   'unreason'
 }
 

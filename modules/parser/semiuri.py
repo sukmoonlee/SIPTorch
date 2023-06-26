@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Syntactical Parser Tests',
-    'test'      :   'Semicolon-Separated Parameters in URI User Part',
+    'test'      :   '(3.1.1.9) Semicolon-Separated Parameters in URI User Part',
     'id'        :   'semiuri'
 }
 

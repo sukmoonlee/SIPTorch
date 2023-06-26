@@ -18,7 +18,7 @@ from mutators.replparam import rmallParam, rmspcParam
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Response with Overlarge Status Code',
+    'test'      :   '(3.1.2.19) Response with Overlarge Status Code',
     'id'        :   'bigcode'
 }
 

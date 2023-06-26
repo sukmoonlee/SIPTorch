@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Invalid Messages',
-    'test'      :   'Request Scalar Fields with Overlarge Values',
+    'test'      :   '(3.1.2.4) Request Scalar Fields with Overlarge Values',
     'id'        :   'reqsclarg'
 }
 

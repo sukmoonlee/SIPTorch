@@ -18,7 +18,7 @@ from mutators.replparam import genRandStr
 
 module_info = {
     'category'  :   'Syntactical Parser Tests',
-    'test'      :   'Multipart MIME Message',
+    'test'      :   '(3.1.1.11) Multipart MIME Message',
     'id'        :   'mpmime'
 }
 

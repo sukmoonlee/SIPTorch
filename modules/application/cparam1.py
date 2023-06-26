@@ -16,7 +16,7 @@ from core.requester.parser import parseSIPMessage, concatMethodxHeaders
 
 module_info = {
     'category'  :   'Application Layer Semantics',
-    'test'      :   'REGISTER with a Contact Header Parameter',
+    'test'      :   '(3.3.12) REGISTER with a Contact Header Parameter',
     'id'        :   'cparam1'
 }
 
