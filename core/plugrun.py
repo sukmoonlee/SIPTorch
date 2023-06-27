@@ -89,6 +89,10 @@ def buildcache(pluginlist):
             loader = pluginlist.load_plugin(plug)
             if loader.module_info['category'] == test:
                 appender.append(loader.module_info['test'])
+        try:
+            appender.sort(key=lambda x : int(x.split(")")[0].split(".")[-1]))
+        except ValueError as err:
+            pass
         memmap[test] = appender
     with open('libs/modules.json', 'w+') as wf:
         json.dump(memmap, wf, indent=4)
