@@ -90,7 +90,7 @@ def buildcache(pluginlist):
             if loader.module_info['category'] == test:
                 appender.append(loader.module_info['test'])
         try:
-            appender.sort(key=lambda x : int(x.split(")")[0].split(".")[-1]))
+            appender.sort(key=lambda x : int(x.split(")", 1)[0].split(".")[-1]))
         except ValueError as err:
             pass
         memmap[test] = appender
