@@ -80,7 +80,8 @@ def buildcache(pluginlist):
         'Backward Compatability Tests',
         'Invalid Messages',
         'Syntactical Parser Tests',
-        'Transaction Layer Semantics'
+        'Transaction Layer Semantics',
+        'Catfish - Protocol'
     ]
     memmap = dict()
     for test in testtypes:
@@ -110,7 +111,8 @@ def runAll(options=None):
                     './modules/backcomp', 
                     './modules/invalid',
                     './modules/parser',
-                    './modules/transaction'
+                    './modules/transaction',
+                    './modules/catfish'
                 ])
     if options is not None and options.build_cache:
         print('executing')
