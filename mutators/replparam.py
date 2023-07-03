@@ -35,7 +35,7 @@ def genCatfishString(length, allow_printable=False):
     '''
     if not allow_printable:
         result = "".join(random.choice(
-            string.ascii_letter + string.digits) for i in range(length))
+            string.ascii_letters + string.digits) for i in range(length))
     else:
         result = "".join(random.choice(
             string.printable) for i in range(length))
