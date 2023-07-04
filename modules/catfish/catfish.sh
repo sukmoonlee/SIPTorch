@@ -1,6 +1,34 @@
 #!/bin/bash
+set +o posix
+################################################################################
+# Generate Catfish Python Code
+# 2023.07.03 created by smlee@sk.com
+################################################################################
+SCRIPT_VERSION="20230703"
+LC_ALL=en_US.UTF-8
+LANG=en_US.UTF-8
+HOSTNAME=$(hostname)
 
+while [ "$#" -gt 0 ] ; do
+case "$1" in
+	-v|--version)
+		echo "$0 $SCRIPT_VERSION"
+		exit 0
+		;;
+	*)
+		echo "Unknown option: $1"
+		exit 1
+esac
+done
 
+if [ "$FLAG_OS" != "FreeBSD" ] && [ -f "/usr/bin/readlink" ] ; then
+	SCRIPT=$(/usr/bin/readlink -f "$0")
+	SCRIPTPATH=$(/usr/bin/dirname "$SCRIPT")
+	cd "$SCRIPTPATH" || exit 1
+else
+	SCRIPTPATH=$(/usr/bin/dirname "$0")
+	cd "$SCRIPTPATH" || exit 1
+fi
 ################################################################################
 # Header Name Length
 ################################################################################

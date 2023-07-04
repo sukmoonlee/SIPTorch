@@ -107,6 +107,9 @@
         "SIP Header Value length - 800",
         "SIP Header Value length - 8000",
         "SIP Header Value length - 900",
-        "SIP Header Value length - 9000"
+        "SIP Header Value length - 9000",
+        "SIP Request Line - Method",
+        "SIP Request Line - Protocol",
+        "SIP Request Line - Request URI"
     ]
 }
