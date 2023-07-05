@@ -17,23 +17,23 @@ from mutators.replparam import genCatfishString
 
 module_info = {
     'category'  :   'Catfish - Protocol',
-    'test'      :   'SIP Request Line - Request URI',
-    'id'        :   'mline_ruri'
+    'test'      :   'Header value(Supported) test String',
+    'id'        :   'supported_string'
 }
 
 
-def mline_ruri():
+def supported_string():
     '''
-    SIP Request line test
+    String values in Supported header field
 
-    REGISTER [[ABC,1,1000,100]] SIP/2.0
+    Supported: [[ABC,1,1000,100]]
     '''
-    log = logging.getLogger('mline_ruri')
+    log = logging.getLogger('supported_string')
     log.info('Testing module: %s' % module_info['test'])
     msg = buildreq.makeRequest('REGISTER')
     mline, head, body = parseSIPMessage(msg)
 
-    mline = mline.replace(mline.split(" ")[1], genCatfishString(100))
+    head['Supported'] = genCatfishString(100, printable=True)
 
     # Forming the request message back up
     mg = concatMethodxHeaders(mline, head, body=body)
@@ -45,5 +45,5 @@ def run():
     Run this module by sending the actual request
     '''
     log = logging.getLogger('run')
-    if runPlugin(mline_ruri(), minfo=module_info):
+    if runPlugin(supported_string(), minfo=module_info):
         log.info('Module %s completed' % module_info['test'])

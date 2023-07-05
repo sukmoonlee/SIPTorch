@@ -58,6 +58,7 @@
         "(3.2.1) Branch Tag Missing Transaction Identifier"
     ],
     "Catfish - Protocol": [
+        "Header value(Expires) test String",
         "SIP Header Name length - 0",
         "SIP Header Name length - 100",
         "SIP Header Name length - 1000",
@@ -108,8 +109,10 @@
         "SIP Header Value length - 8000",
         "SIP Header Value length - 900",
         "SIP Header Value length - 9000",
+        "Header value(Max-Forwards) test String",
         "SIP Request Line - Method",
         "SIP Request Line - Protocol",
-        "SIP Request Line - Request URI"
+        "SIP Request Line - Request URI",
+        "Header value(Supported) test String"
     ]
 }
