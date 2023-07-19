@@ -19,6 +19,7 @@ import subprocess
 from libs import config
 from libs.data import BAD_RESP
 
+
 def genCombinations(lst, LW_CONST=3, UP_CONST=7):
     '''
     Takes in a list and generates combination of those chars to form a string
@@ -57,7 +58,7 @@ def validateHost(url: str):
     try:
         socket.inet_aton(url)
         log.info('Input seems to be a IP address')
-        if lookUp(url):
+        if lookUp(url, port=config.RPORT):
             return url
         else:
             log.critical('Target %s not responding on port %s' % (url, config.RPORT))
@@ -68,7 +69,8 @@ def validateHost(url: str):
         if ip:
             log.info("%s resolves to %s" % (url, ip))
             return ip
-        else: return
+        else:
+            return
 
 
 def lookUp(url: str, typef='ip', port=config.RPORT):
@@ -84,7 +86,8 @@ def lookUp(url: str, typef='ip', port=config.RPORT):
             if s.connect_ex((url, port)) == 0:
                 log.info('Valid IP detected')
                 return True
-            else: return
+            else:
+                return
         else:
             ip = socket.gethostbyname(url)
             return ip
@@ -146,6 +149,6 @@ def clsterm(content: str):
     '''
     Clears terminal and then prints out the content
     '''
-    _ = subprocess.call('clear' if os.name =='posix' else 'cls')
+    _ = subprocess.call('clear' if os.name == 'posix' else 'cls')
     print(content)
     return
