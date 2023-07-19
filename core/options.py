@@ -58,7 +58,7 @@ optional.add_argument('-q', '--quiet',
                 help='Decrease verbosity to lowest level', dest='quiet', action='store_true')
 optional.add_argument('-V', '--version',
                 help='Display the version number and exit', dest='version', action='store_true')
-#optional.add_argument('--check-update'
+# optional.add_argument('--check-update'
 #                help='Checks if a new update is available', dest='update', action='store_true')
 optional.add_argument('--user-agent',
                 help='Use custom user-agent', dest='user_agent', type=str)
@@ -66,6 +66,12 @@ optional.add_argument('--spoof-ua',
                 help='Spoof user-agents with every request randomly', dest='spoof_ua', action='store_true')
 optional.add_argument('--build-cache',
                 help='Build the modules cache (after a new module has been added)', dest='build_cache', action='store_true')
+optional.add_argument('--proxy',
+                help='Working Proxy mode (server to server SIP)', dest='proxy', action='store_true')
+optional.add_argument('--tcp',
+                help='TCP mode (tcp client session)', dest='tcp', action='store_true')
+optional.add_argument('--tls',
+                help='TLS/SIP mode (tls/sip client session)', dest='tls', action='store_true')
 args = parser.parse_args()
 
 if not len(sys.argv) > 1:
@@ -133,3 +139,20 @@ if args.output:
 if args.spoof_ua:
     log.info('Spoofing user-agent from now on')
     config.SPOOF_UA = True
+
+if args.proxy:
+    log.info('SIP Proxy Mode')
+    config.PROXY = True
+
+if args.tcp:
+    log.info('SIP TCP Session Mode')
+    config.TCP = True
+    config.PROXY = False
+    if args.tls:
+        log.info('TLS/SIP Session Mode')
+        config.TLS = True
+    else:
+        config.TLS = False
+else:
+    config.TCP = False
+    config.TLS = False

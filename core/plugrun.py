@@ -21,6 +21,7 @@ from core.colors import color, G, GR
 from core.requester import connector
 from core.utils import checkBadResponse
 
+
 def runPlugin(msg: str, minfo: dict):
     '''
     Perform the request and print results
@@ -29,13 +30,27 @@ def runPlugin(msg: str, minfo: dict):
     if not msg:
         log.critical('Nothing received as request body')
         return
-    sock = connector.sockinit()
+    if not config.TCP:
+        sock = connector.sockinit()
+    else:
+        sock = connector.tcp_sockinit()
     print(GR, 'Running test: %s%s%s' % (color.ORANGE, minfo['test'], color.END))
     log.debug("Sending the request")
     try:
         log.debug('\n%sRequest:%s %s' % (color.RED, color.END, msg.strip()))
-        connector.sendreq(sock, msg)
-        data, *_ = connector.handler(sock)
+        if not config.PROXY:
+            if not config.TCP:
+                connector.sendreq(sock, msg)
+                data, *_ = connector.handler(sock)
+            else:
+                if not config.TLS:
+                    connector.tcp_sendreq(sock, msg)
+                    data, *_ = connector.tcp_handler(sock)
+                else:
+                    ssock = connector.tcp_tls_sendreq(sock, msg)
+                    data, *_ = connector.tcp_tls_handler(sock, ssock)
+        else:
+            data, *_ = connector.proxy_handler(sock, msg)
         log.debug('\n%sResponse:%s %s' % (color.RED, color.END, data.strip()))
         if config.LOG_FILE:
             log.debug('Logging data to file')
@@ -54,7 +69,13 @@ def runPlugin(msg: str, minfo: dict):
             logresp(logdata)
         # We wait for more data
         if checkBadResponse(data):
-            data, *_ = connector.handler(sock)
+            if not config.TCP:
+                data, *_ = connector.handler(sock)
+            else:
+                if not config.TLS:
+                    data, *_ = connector.tcp_handler(sock)
+                else:
+                    data, *_ = connector.tcp_tls_handler(sock, ssock)
             log.debug('\n%sResponse:%s %s' % (color.RED, color.END, data.strip()))
             if config.LOG_FILE:
                 log.debug('Logging data to file')
@@ -68,7 +89,7 @@ def runPlugin(msg: str, minfo: dict):
         return True
     except socket.error as err:
         log.critical('Something\'s not right here: %s' % err.__str__())
-        return 
+        return
 
 
 def buildcache(pluginlist):
@@ -91,8 +112,8 @@ def buildcache(pluginlist):
             if loader.module_info['category'] == test:
                 appender.append(loader.module_info['test'])
         try:
-            appender.sort(key=lambda x : int(x.split(")", 1)[0].split(".")[-1]))
-        except ValueError as err:
+            appender.sort(key=lambda x: int(x.split(")", 1)[0].split(".")[-1]))
+        except ValueError:
             pass
         memmap[test] = appender
     with open('libs/modules.json', 'w+') as wf:
@@ -114,6 +135,7 @@ def runAll(options=None):
                     './modules/transaction',
                     './modules/catfish'
                 ])
+    # pluginsource = plugin.make_plugin_source(searchpath=['./modules/application', './modules/backcomp'])
     if options is not None and options.build_cache:
         print('executing')
         buildcache(pluginsource)  # <- Uncomment this line to build cache

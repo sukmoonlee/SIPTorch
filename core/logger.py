@@ -15,6 +15,7 @@ from libs import config
 from core.colors import C, R, G, color
 from core.requester.parser import parseSIPMessage
 
+
 class CustomFormatter(logging.Formatter):
     '''
     Customising my style of logging the results
@@ -73,12 +74,13 @@ def checkDir(hst: str):
         return dirc
     return dirc
 
+
 def loggerinit(host: str):
     '''
     Module to get stuff together
     '''
     global dirc
-    dirc = checkDir(host) + host + '.md'
+    dirc = checkDir(host) + datetime.datetime.now().strftime("%Y%m%d-%H%M") + '-' + host + '.md'
     s = '''# SIPTorch Report
 
 ## Target Specifications:
@@ -86,9 +88,13 @@ def loggerinit(host: str):
 - __IP:__ %s
 - __Port:__ %s
 - __Extension:__ %s
+- __Transport layer:__ %s%s%s
 
 ## Tests:
-    ''' % (host, config.IP, config.RPORT, config.DEF_EXT)
+    ''' % (host, config.IP, config.RPORT, config.DEF_EXT,
+        "PROXY " if config.PROXY == True else "",
+        "TLS/" if config.TLS == True else "",
+        "UDP" if config.TCP == False else "TCP")
     # Creating the file now
     with open(dirc, 'w+', encoding='utf-8', newline='\n') as f:
         f.write(s)

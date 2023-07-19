@@ -116,7 +116,7 @@ TIMEOUT = 5
 DELAY = 0
 
 # Binding interface to use
-BIND_IFACE = 'any'
+BIND_IFACE = '0.0.0.0'
 
 # Log to file bool
 LOG_FILE = True
@@ -126,6 +126,13 @@ OUTPUT_DIR = './siptorch-output/'
 
 # Spoof User-Agents
 SPOOF_UA = False
+
+# SIP Proxy Mode
+PROXY = False
+
+# TCP TLS/SIP Mode
+TCP = False
+TLS = False
 
 # Debug level
 DEBUG_LEVEL = 30

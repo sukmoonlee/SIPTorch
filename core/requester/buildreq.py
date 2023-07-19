@@ -16,6 +16,7 @@ from core.utils import extractExtension
 from core.requester.parser import concatMethodxHeaders
 from mutators.replparam import genRandStr
 
+
 def makeRequest(method, bsbody=''):
     '''
     Build up the SIP request properly from scratch
@@ -32,6 +33,7 @@ def makeRequest(method, bsbody=''):
         body = body.replace('x.x.x.x', srchost).replace('y.y.y.y', dsthost)
     if bsbody:
         body = bsbody
+        body = body.replace('x.x.x.x', srchost).replace('y.y.y.y', dsthost)
     if extension is None or method.upper() == 'REGISTER':
         uri = 'sip:%s' % dsthost
     else:
@@ -42,7 +44,10 @@ def makeRequest(method, bsbody=''):
     if not BRANCH:
         branch = '%s' % random.getrandbits(32)
     else: srchost = SRC_HOST
-    headers['Via'] = 'SIP/2.0/UDP %s:%s;branch=z9hG4bK-%s;rport' % (srchost, LPORT, branch)
+    if not TCP:
+        headers['Via'] = 'SIP/2.0/UDP %s:%s;branch=z9hG4bK-%s;rport' % (srchost, LPORT, branch)
+    else:
+        headers['Via'] = 'SIP/2.0/TCP %s:%s;branch=z9hG4bK-%s;rport' % (srchost, LPORT, branch)
     headers['Max-Forwards'] = 70
     if not TO_ADDR:
         headers['To'] = '"%s" <sip:%s@%s>' % (DEF_EXT, DEF_EXT, RHOST)
