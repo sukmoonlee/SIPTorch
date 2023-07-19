@@ -46,6 +46,8 @@ def genCatfishNumber(length, allow_first_zero=False):
     '''
     Generates a random number depending on choice for catfish
     '''
+    if length <= 0:
+        return ""
     if allow_first_zero:
         result = "".join(random.choice(
             string.digits) for i in range(length))
@@ -54,7 +56,7 @@ def genCatfishNumber(length, allow_first_zero=False):
             "123456789") for i in range(1))
         if length > 1:
             result += "".join(random.choice(
-                string.digits) for i in range(length-1))
+                string.digits) for i in range(length - 1))
     return result
 
 
