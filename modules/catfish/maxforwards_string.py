@@ -33,7 +33,7 @@ def maxforwards_string():
     msg = buildreq.makeRequest('REGISTER')
     mline, head, body = parseSIPMessage(msg)
 
-    head['Max-Forwards'] = genCatfishString(100, printable=True)
+    head['Max-Forwards'] = genCatfishString(100, allow_printable=True)
 
     # Forming the request message back up
     mg = concatMethodxHeaders(mline, head, body=body)

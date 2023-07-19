@@ -36,7 +36,7 @@ def hdr_value_4000():
     if "4000" == "0":
         head['User-Agent'] = ''
     else:
-        head['User-Agent'] = '%s' % genCatfishString(4000, printable=True)
+        head['User-Agent'] = genCatfishString(4000, allow_printable=True)
 
     # Forming the request message back up
     mg = concatMethodxHeaders(mline, head, body=body)

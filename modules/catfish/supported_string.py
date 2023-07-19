@@ -33,7 +33,7 @@ def supported_string():
     msg = buildreq.makeRequest('REGISTER')
     mline, head, body = parseSIPMessage(msg)
 
-    head['Supported'] = genCatfishString(100, printable=True)
+    head['Supported'] = genCatfishString(100, allow_printable=True)
 
     # Forming the request message back up
     mg = concatMethodxHeaders(mline, head, body=body)

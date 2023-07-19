@@ -26,14 +26,14 @@ def mline_protocol():
     '''
     SIP Request line test
 
-    REGISTER sip:sktims.net [[ABC,1,1000,100]] 
+    REGISTER sip:sktims.net [[ABC,1,1000,100]]
     '''
     log = logging.getLogger('mline_protocol')
     log.info('Testing module: %s' % module_info['test'])
     msg = buildreq.makeRequest('REGISTER')
     mline, head, body = parseSIPMessage(msg)
 
-    mline = mline.replace(mline.split(" ")[2], genCatfishString(100, printable=True))
+    mline = mline.replace(mline.split(" ")[2], genCatfishString(100, allow_printable=True))
 
     # Forming the request message back up
     mg = concatMethodxHeaders(mline, head, body=body)

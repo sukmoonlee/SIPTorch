@@ -140,7 +140,7 @@ def $id():
     if "$i" == "0":
         head['User-Agent'] = ''
     else:
-        head['User-Agent'] = '%s' % genCatfishString($i, printable=True)
+        head['User-Agent'] = genCatfishString($i, allow_printable=True)
 
     # Forming the request message back up
     mg = concatMethodxHeaders(mline, head, body=body)
