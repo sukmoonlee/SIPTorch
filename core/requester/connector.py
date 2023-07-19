@@ -165,11 +165,18 @@ def tcp_handler(sock):
     while True:
         data, *_ = select.select(rlist, wlist, xlist, config.TIMEOUT)
         if data:
-            buff = sock.recv(8192)
-            src = (config.IP, config.RPORT)
-            daff, host, port = parseResponse(buff, src)
-            log.debug("Data received from: %s:%s" % (str(host), str(port)))
-            return (daff, host, port)
+            try:
+                buff = sock.recv(8192)
+                src = (config.IP, config.RPORT)
+                daff, host, port = parseResponse(buff, src)
+                log.debug("Data received from: %s:%s" % (str(host), str(port)))
+                return (daff, host, port)
+            except socket.timeout:
+                log.error('Timeout occured when waiting for message')
+                return ('Timeout occured when waiting for message', '', '')
+            except socket.error as err:
+                log.error("Target errored out: %s" % (err.__str__()))
+                return ('Error Enountered: %s' % err.__str__(), '', '')
         else:
             try:
                 buff = sock.recv(8192)
@@ -222,11 +229,18 @@ def tcp_tls_handler(sock, ssock):
     while True:
         data, *_ = select.select(rlist, wlist, xlist, config.TIMEOUT)
         if data:
-            buff = ssock.recv(8192)
-            src = (config.IP, config.RPORT)
-            daff, host, port = parseResponse(buff, src)
-            log.debug("Data received from: %s:%s" % (str(host), str(port)))
-            return (daff, host, port)
+            try:
+                buff = ssock.recv(8192)
+                src = (config.IP, config.RPORT)
+                daff, host, port = parseResponse(buff, src)
+                log.debug("Data received from: %s:%s" % (str(host), str(port)))
+                return (daff, host, port)
+            except socket.timeout:
+                log.error('Timeout occured when waiting for message')
+                return ('Timeout occured when waiting for message', '', '')
+            except socket.error as err:
+                log.error("Target errored out: %s" % (err.__str__()))
+                return ('Error Enountered: %s' % err.__str__(), '', '')
         else:
             try:
                 buff = ssock.recv(8192)
