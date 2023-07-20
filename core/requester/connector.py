@@ -48,7 +48,15 @@ def handler(sock):
     bindingface = config.BIND_IFACE
     localport = config.LPORT
     # Descriptors to use during async I/O waiting
-    rlist = [sock]
+    if config.PROXY:
+        newsock = sockinit()
+        try:
+            newsock.bind((bindingface, localport))
+        except socket.error:
+            pass
+        rlist = [sock, newsock]
+    else:
+        rlist = [sock]
     wlist, xlist = list(), list()
     log.debug("Binding to %s:%s" % (bindingface, config.LPORT))
     try:
@@ -56,17 +64,26 @@ def handler(sock):
     except socket.error:
         pass
     while True:
-        data, *_ = select.select(rlist, wlist, xlist, config.TIMEOUT)
-        if data:
-            buff, src = sock.recvfrom(8192)
-            daff, host, port = parseResponse(buff, src)
-            log.debug("Data received from: %s:%s" % (str(host), str(port)))
+        ready_socks, *_ = select.select(rlist, wlist, xlist, config.TIMEOUT)
+        if ready_socks:
+            for s in ready_socks:
+                buff, src = s.recvfrom(8192)
+                daff, host, port = parseResponse(buff, src)
+                log.debug("Data received from: %s:%s" % (str(host), str(port)))
+                if len(daff) > 0:
+                    break
+            if config.PROXY:
+                newsock.close()
             return (daff, host, port)
         else:
             try:
                 buff, src = sock.recvfrom(8192)
+                if config.PROXY and len(buff) <= 0:
+                    buff, src = newsock.recvfrom(8192)
                 daff, host, port = parseResponse(buff, src)
                 log.debug("Data received from: %s:%s" % (str(host), str(port)))
+                if config.PROXY:
+                    newsock.close()
                 return (daff, host, port)
             except socket.timeout:
                 message = 'Generic timeout occured - no reply received.\n'
@@ -74,57 +91,13 @@ def handler(sock):
                 message += 'encountered an issue which handling this request.\n'
                 message += 'Investigate your server logs.'
                 log.error('Timeout occured when waiting for message')
+                if config.PROXY:
+                    newsock.close()
                 return (message, '', '')
             except socket.error as err:
                 log.error("Target errored out: %s" % (err.__str__()))
-                return ('Error Enountered: %s' % err.__str__(), '', '')
-
-
-def proxy_handler(sock, data):
-    '''
-    Listens for incoming messages
-    '''
-    log = logging.getLogger('proxy_handler')
-    bindingface = config.BIND_IFACE
-    localport = config.LPORT
-    # Descriptors to use during async I/O waiting
-    rlist = [sock]
-    wlist, xlist = list(), list()
-    log.debug("Binding to %s:%s" % (bindingface, localport))
-    try:
-        sock.bind((bindingface, localport))
-    except socket.error as error:
-        log.error("socket binding error : (%d) %s" % (error.errno, os.strerror(error.errno)))
-
-    s = sockinit()
-    sendreq(s, data)
-
-    while True:
-        data, *_ = select.select(rlist, wlist, xlist, config.TIMEOUT)
-        if data:
-            buff, src = sock.recvfrom(8192)
-            daff, host, port = parseResponse(buff, src)
-            log.debug("Data received from: %s:%s" % (str(host), str(port)))
-            s.close()  # Terminate the socket
-            return (daff, host, port)
-        else:
-            try:
-                buff, src = sock.recvfrom(8192)
-                daff, host, port = parseResponse(buff, src)
-                log.debug("Data received from: %s:%s" % (str(host), str(port)))
-                s.close()  # Terminate the socket
-                return (daff, host, port)
-            except socket.timeout:
-                message = 'Generic timeout occured - no reply received.\n'
-                message += 'It is highly probable that the server might have '
-                message += 'encountered an issue which handling this request.\n'
-                message += 'Investigate your server logs.'
-                log.error('Timeout occured when waiting for message')
-                s.close()  # Terminate the socket
-                return (message, '', '')
-            except socket.error as err:
-                log.error("Target errored out: %s" % (err.__str__()))
-                s.close()  # Terminate the socket
+                if config.PROXY:
+                    newsock.close()
                 return ('Error Enountered: %s' % err.__str__(), '', '')
 
 
@@ -170,6 +143,8 @@ def tcp_handler(sock):
                 src = (config.IP, config.RPORT)
                 daff, host, port = parseResponse(buff, src)
                 log.debug("Data received from: %s:%s" % (str(host), str(port)))
+                if len(daff)==0:
+                    return ('Connection closed', host, port)
                 return (daff, host, port)
             except socket.timeout:
                 log.error('Timeout occured when waiting for message')
@@ -183,6 +158,8 @@ def tcp_handler(sock):
                 src = (config.IP, config.RPORT)
                 daff, host, port = parseResponse(buff, src)
                 log.debug("Data received from: %s:%s" % (str(host), str(port)))
+                if len(daff)==0:
+                    return ('Connection closed', host, port)
                 return (daff, host, port)
             except socket.timeout:
                 message = 'Generic timeout occured - no reply received.\n'
@@ -234,6 +211,8 @@ def tcp_tls_handler(sock, ssock):
                 src = (config.IP, config.RPORT)
                 daff, host, port = parseResponse(buff, src)
                 log.debug("Data received from: %s:%s" % (str(host), str(port)))
+                if len(daff)==0:
+                    return ('Connection closed', host, port)
                 return (daff, host, port)
             except socket.timeout:
                 log.error('Timeout occured when waiting for message')
@@ -247,6 +226,8 @@ def tcp_tls_handler(sock, ssock):
                 src = (config.IP, config.RPORT)
                 daff, host, port = parseResponse(buff, src)
                 log.debug("Data received from: %s:%s" % (str(host), str(port)))
+                if len(daff)==0:
+                    return ('Connection closed', host, port)
                 return (daff, host, port)
             except socket.timeout:
                 message = 'Generic timeout occured - no reply received.\n'

@@ -38,19 +38,16 @@ def runPlugin(msg: str, minfo: dict):
     log.debug("Sending the request")
     try:
         log.debug('\n%sRequest:%s %s' % (color.RED, color.END, msg.strip()))
-        if not config.PROXY:
-            if not config.TCP:
-                connector.sendreq(sock, msg)
-                data, *_ = connector.handler(sock)
-            else:
-                if not config.TLS:
-                    connector.tcp_sendreq(sock, msg)
-                    data, *_ = connector.tcp_handler(sock)
-                else:
-                    ssock = connector.tcp_tls_sendreq(sock, msg)
-                    data, *_ = connector.tcp_tls_handler(sock, ssock)
+        if not config.TCP:
+            connector.sendreq(sock, msg)
+            data, *_ = connector.handler(sock)
         else:
-            data, *_ = connector.proxy_handler(sock, msg)
+            if not config.TLS:
+                connector.tcp_sendreq(sock, msg)
+                data, *_ = connector.tcp_handler(sock)
+            else:
+                ssock = connector.tcp_tls_sendreq(sock, msg)
+                data, *_ = connector.tcp_tls_handler(sock, ssock)
         log.debug('\n%sResponse:%s %s' % (color.RED, color.END, data.strip()))
         if config.LOG_FILE:
             log.debug('Logging data to file')
