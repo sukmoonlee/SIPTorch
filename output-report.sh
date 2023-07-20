@@ -12,6 +12,7 @@ if [ ! -f "$filename" ] ; then
 	exit 1
 fi
 
+declare -A report_array
 flag=0
 while read -r i_line
 do
@@ -29,12 +30,21 @@ do
 	if [ "${i_line:0:11}" == "- Response:" ] ; then
 		flag=1
 	fi
+	if [ "${i_line:0:26}" == "- Response Received Later:" ] ; then
+		flag=1
+	fi
 	if [ "$flag" == "0" ] ; then continue; fi
 	if [ "$flag" == "1" ] && [ "${i_line:0:3}" == "\`\`\`" ] ; then flag=2; test_result=; continue; fi
 	if [ "$flag" == "2" ] && [ "$test_result" == "" ] ; then test_result="$i_line"; fi
 	if [ "$flag" == "2" ] && [ "${i_line:0:3}" == "\`\`\`" ] ; then
 		flag=0
 		if [ "${test_result:0:3}" == "\`\`\`" ] ; then test_result=; fi
-		echo "$test_category|$test_id|$test_title|$test_result"
+		#echo "$test_category|$test_id|$test_title|$test_result"
+		report_array["$test_category|$test_title|$test_id"]="$test_result"
 	fi
 done < <(cat "$filename")
+
+for key in "${!report_array[@]}"
+do
+	echo "$key|${report_array[$key]}"
+done | sort
