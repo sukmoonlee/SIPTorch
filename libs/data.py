@@ -84,7 +84,7 @@ RESP_MAP = {
     "422" : "Session Interval Too Small",
     "423" : "Interval Too Brief",
     "424" : "Bad Location Information",
-    "425" : " Bad Alert Message",
+    "425" : "Bad Alert Message",
     "428" : "Use Identity Header",
     "429" : "Provide Referrer Identity",
     "430" : "Flow Failed",

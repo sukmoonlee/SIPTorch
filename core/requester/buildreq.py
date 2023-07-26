@@ -32,8 +32,7 @@ def makeRequest(method, bsbody=''):
         body = INVITE_BODY
         body = body.replace('x.x.x.x', srchost).replace('y.y.y.y', dsthost)
     if bsbody:
-        body = bsbody
-        body = body.replace('x.x.x.x', srchost).replace('y.y.y.y', dsthost)
+        body = bsbody.replace('x.x.x.x', srchost).replace('y.y.y.y', dsthost)
     if extension is None or method.upper() == 'REGISTER':
         uri = 'sip:%s' % dsthost
     else:
